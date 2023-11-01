@@ -1,6 +1,8 @@
 ﻿using Contracts;
 using EmployeeManagement.Repository;
+
 using EmployeeManagement.Service;
+
 using LoggerService;
 
 namespace EmployeeManagement.Extentions
@@ -19,10 +21,12 @@ namespace EmployeeManagement.Extentions
             service.AddScoped<RepositoryManager, RepositoryManager>();
         }
 
+
         public static void ConfigureServiceManager(this IServiceCollection services)
         {
             services.AddScoped<IServiceManager,ServiceManager>();
         }
+
 
     }
 }

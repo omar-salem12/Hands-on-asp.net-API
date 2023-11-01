@@ -11,10 +11,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoggerService", "LoggerServ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entities.csproj", "{0E47CF75-3633-4ED5-8E7D-96BE70990FA0}"
 EndProject
+<<<<<<< HEAD
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeManagement.Presentations", "EmployeeManagement.Presentations\EmployeeManagement.Presentations.csproj", "{24891060-5DBE-4D78-8154-79ED0EFE4D17}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shard", "Shard\Shard.csproj", "{362789CC-2ADF-4E1D-9B79-316971FAD006}"
 EndProject
+=======
+>>>>>>> ddb2738d05378ad0410a6e916b52d66c9c610676
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +40,7 @@ Global
 		{0E47CF75-3633-4ED5-8E7D-96BE70990FA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E47CF75-3633-4ED5-8E7D-96BE70990FA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E47CF75-3633-4ED5-8E7D-96BE70990FA0}.Release|Any CPU.Build.0 = Release|Any CPU
+<<<<<<< HEAD
 		{24891060-5DBE-4D78-8154-79ED0EFE4D17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{24891060-5DBE-4D78-8154-79ED0EFE4D17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24891060-5DBE-4D78-8154-79ED0EFE4D17}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,6 +49,8 @@ Global
 		{362789CC-2ADF-4E1D-9B79-316971FAD006}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{362789CC-2ADF-4E1D-9B79-316971FAD006}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{362789CC-2ADF-4E1D-9B79-316971FAD006}.Release|Any CPU.Build.0 = Release|Any CPU
+=======
+>>>>>>> ddb2738d05378ad0410a6e916b52d66c9c610676
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
