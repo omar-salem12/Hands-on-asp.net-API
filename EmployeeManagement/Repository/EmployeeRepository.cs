@@ -1,6 +1,7 @@
 ﻿using Contracts;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
+using Shard.RequestFeatures;
 
 namespace EmployeeManagement.Repository
 {
@@ -14,9 +15,20 @@ namespace EmployeeManagement.Repository
 
        
 
-        public async Task<IEnumerable<Employee>> GetEmployeesAsync(Guid companyId, bool trackChanges)
+        public async Task<PageList<Employee>> GetEmployeesAsync(Guid companyId,
+                                                EmployeeParameters parameters,
+                                                bool trackChanges)
         {
-            return await FindByCondition(e => e.CompanyId.Equals(companyId), trackChanges).OrderBy( e=>e.Name).ToListAsync();
+            var employees =  await 
+                FindByCondition(e => e.CompanyId.Equals(companyId), trackChanges).OrderBy( e=>e.Name)
+                .Skip((parameters.PageNumber -1)* parameters.pageSize )
+                .Take(parameters.pageSize)
+                 .ToListAsync();
+            var count = await FindByCondition(e => e.CompanyId.Equals(companyId),
+                                trackChanges).CountAsync();
+
+            return new PageList<Employee>(employees,count,parameters.PageNumber,parameters.pageSize);
+
         }
 
         public async Task<Employee> GetEmployeeAsync(Guid companyId, Guid employeeId, bool trackChanges) =>

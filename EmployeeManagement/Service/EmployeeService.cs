@@ -4,6 +4,7 @@ using EmployeeManagement.Repository;
 using Entities.Exceptions;
 using Entities.Models;
 using Shard.DataTransferObjects;
+using Shard.RequestFeatures;
 
 namespace EmployeeManagement.Service
 {
@@ -22,14 +23,19 @@ namespace EmployeeManagement.Service
 
      
 
-        public async Task<IEnumerable<EmployeeDto>> GetEmployeesAsync(Guid companyId, bool traceChanges)
+        public async Task<(IEnumerable<EmployeeDto> employees, MetaData metaData)> GetEmployeesAsync(Guid companyId,
+                                                                      EmployeeParameters employeeParameters
+                                                                   
+                                                                      ,bool traceChanges)
         {
             var company = await _rpositoryManager.Company.GetCompanyAsync(companyId, traceChanges);
             if (company is null)
                 throw new CompanyNotFoundException(companyId);
-            var employeesFromDb = await _rpositoryManager.Employee.GetEmployeesAsync(companyId, traceChanges);
-            var employeseDto = _mapper.Map<IEnumerable<EmployeeDto>>(employeesFromDb);
-            return employeseDto;
+            var employeeswithMetaData =
+                await _rpositoryManager.Employee.GetEmployeesAsync(companyId,employeeParameters ,traceChanges);
+            var employeseDto = _mapper.Map<IEnumerable<EmployeeDto>>(employeeswithMetaData.ToList());
+            var metaData = employeeswithMetaData.metaData;
+            return (employeseDto,metaData);
         }
 
         public async Task<EmployeeDto> GetEmployeeAsync(Guid companyId, Guid employeeId, bool traceChanges)

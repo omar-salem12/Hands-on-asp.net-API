@@ -13,6 +13,7 @@ LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(),"/nlo
 builder.Services.ConfigureLoggerService();
 builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
+builder.Services.ConfigureCors();
 
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.Configure<ApiBehaviorOptions>(options =>
@@ -39,7 +40,7 @@ app.ConfigureExceptionHandler(); // general exeption handelar middelware
 
 
 // Configure the HTTP request pipeline.
-
+app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
 
 app.UseForwardedHeaders(new ForwardedHeadersOptions

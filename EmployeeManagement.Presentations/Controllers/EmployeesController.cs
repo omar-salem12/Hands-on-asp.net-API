@@ -2,11 +2,13 @@
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using Shard.DataTransferObjects;
+using Shard.RequestFeatures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization.Formatters;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace EmployeeManagement.Presentations.Controllers
@@ -24,10 +26,13 @@ namespace EmployeeManagement.Presentations.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetEmployeesForCompany(Guid companyId)
+        public async Task<IActionResult> GetEmployeesForCompany(Guid companyId,
+            [FromQuery] EmployeeParameters employeeParameters)
         {
-            var employees = await _service.EmployeeService.GetEmployeesAsync(companyId, traceChanges: false);
-            return Ok(employees);
+            var PageList = await _service.EmployeeService.
+                GetEmployeesAsync(companyId, employeeParameters,traceChanges: false);
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(PageList.metaData));
+            return Ok(PageList.employees);
         }
 
         [HttpGet("{employeeId:Guid}",Name ="EmployeeGetById")]
