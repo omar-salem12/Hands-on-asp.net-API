@@ -24,21 +24,21 @@ namespace EmployeeManagement.Presentations.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetEmployeesForCompany(Guid companyId)
+        public async Task<IActionResult> GetEmployeesForCompany(Guid companyId)
         {
-            var employees = _service.EmployeeService.GetEmployees(companyId, traceChanges: false);
+            var employees = await _service.EmployeeService.GetEmployeesAsync(companyId, traceChanges: false);
             return Ok(employees);
         }
 
         [HttpGet("{employeeId:Guid}",Name ="EmployeeGetById")]
-        public IActionResult GetEmployee(Guid companyId, Guid employeeId)
+        public async Task <IActionResult> GetEmployee(Guid companyId, Guid employeeId)
         {
-            var employee = _service.EmployeeService.GetEmployee(companyId, employeeId, false);
+            var employee = await _service.EmployeeService.GetEmployeeAsync(companyId, employeeId, false);
             return Ok(employee);
         }
 
         [HttpPost]
-        public IActionResult CreateEmployeeForCompany(Guid companyId, 
+        public async Task<IActionResult> CreateEmployeeForCompany(Guid companyId, 
                                      [FromBody] EmployeeForCreationDto employee)
         {
             if (employee is null)
@@ -50,24 +50,24 @@ namespace EmployeeManagement.Presentations.Controllers
             }
 
             var employeeToReturn  = 
-             _service.EmployeeService.CreateEmployeeForCompany(companyId, employee, trackChanges:false);
+           await  _service.EmployeeService.CreateEmployeeForCompanyAsync(companyId, employee, trackChanges:false);
             return CreatedAtRoute("EmployeeGetById", new { companyId, employeeId = employeeToReturn.Id }, employeeToReturn);
         }
 
         [HttpDelete("{id:Guid}")]
-        public IActionResult DeleteEmployeeForCompany(Guid companyId, Guid id)
+        public async Task <IActionResult> DeleteEmployeeForCompany(Guid companyId, Guid id)
         {
-            _service.EmployeeService.DeleteEmployeeForCompany(companyId, id, trackChanges: false);
+           await _service.EmployeeService.DeleteEmployeeForCompanyAsync(companyId, id, trackChanges: false);
             return NoContent();
         }
 
         [HttpPut("{id:guid}")]
-        public IActionResult UpdateEmployeeForCompany(Guid companyId, Guid id,
+        public async Task<IActionResult> UpdateEmployeeForCompany(Guid companyId, Guid id,
                                   [FromBody] EmployeeForUpdateDto employee)
         {
             if (employee is null)
                 return BadRequest("EmployeeForUpdateDto object is null");
-            _service.EmployeeService.UpdateEmployeeForCompany(companyId, id, employee,
+           await _service.EmployeeService.UpdateEmployeeForCompanyAsync(companyId, id, employee,
                                                                comTrackChaanges: false,
                                                                empTrackChanges: true);
             return NoContent();

@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace Shard.DataTransferObjects
 {
-  
-    public  record CompanyDto
+
+    public record CompanyDto
     {
         public Guid Id { get; set; }
         public string? Name { get; set; }
         public String? FullAddress { get; set; }
     }
-        
-        
-        //(Guid Id, string Name, string FullAddress);
-   
+
+
+    //(Guid Id, string Name, string FullAddress);
+
 }

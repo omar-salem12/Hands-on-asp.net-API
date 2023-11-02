@@ -20,9 +20,9 @@ namespace EmployeeManagement.Repository
 
         public IEmployeeRepository Employee => _employeeRepository.Value;
 
-        public void Save()
+        public async Task SaveAsync()
         {
-            _repositoryContext.SaveChanges();
+           await _repositoryContext.SaveChangesAsync();
         }
     }
 }

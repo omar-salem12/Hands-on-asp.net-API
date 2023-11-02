@@ -18,23 +18,23 @@ namespace EmployeeManagement.Presentations.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetCompanies()
+        public async Task<IActionResult> GetCompanies()
         {
           
-                var companies = _servic.CompanyService.GetAllCompanies(trackChanges: false);
+                var companies =  await _servic.CompanyService.GetAllCompaniesAsync(trackChanges: false);
                 return Ok(companies);
            
         }
 
         [HttpGet("{id:guid}",Name ="CompanyById")]
-        public IActionResult GetCompany(Guid id)
+        public async Task<IActionResult> GetCompany(Guid id)
         {
-            var company = _servic.CompanyService.GetCompany(id,trackChanges:false);
+            var company =await _servic.CompanyService.GetCompanyAsync(id,trackChanges:false);
             return Ok(company);
         }
 
         [HttpPost]
-        public IActionResult CreateCompany([FromBody] CompanyForCreationDto company)
+        public async Task<IActionResult> CreateCompany([FromBody] CompanyForCreationDto company)
         {
             if (company is null)
                 return BadRequest("CompanyForCreationDto object is null");
@@ -42,28 +42,28 @@ namespace EmployeeManagement.Presentations.Controllers
             {
                 return UnprocessableEntity(ModelState);
             }
-            var companyDto = _servic.CompanyService.CreateCompany(company);
+            var companyDto = await _servic.CompanyService.CreateCompanyAsync(company);
             return CreatedAtRoute("CompanyById", new { id = companyDto.Id }, companyDto);
         }
 
 
         [HttpGet("collection/({ids})", Name ="CompanyCollection")]
-        public IActionResult GetCompanyCollection(IEnumerable<Guid> ids)
+        public async Task <IActionResult> GetCompanyCollection(IEnumerable<Guid> ids)
         {
-            var companies = _servic.CompanyService.GetByIds(ids, trackChanges: false);
+            var companies = await _servic.CompanyService.GetByIdsAsync(ids, trackChanges: false);
             return Ok(companies);
         }
 
 
         [HttpDelete("{id:guid}")]
-        public IActionResult DeleteCompany(Guid Id)
+        public async Task<IActionResult> DeleteCompany(Guid Id)
         {
-            _servic.CompanyService.DeleteCompany(Id, trackchanges: false);
+           await _servic.CompanyService.DeleteCompanyAsync(Id, trackchanges: false);
             return NoContent();
         }
 
         [HttpPut("{id:guid}")]
-        public IActionResult UpdateCompany(Guid id , [FromBody] CompanyForUpdateDto company)
+        public async Task<IActionResult> UpdateCompany(Guid id , [FromBody] CompanyForUpdateDto company)
         {
             if(company is null)
                 return BadRequest("ComapanyForUpdateDto object is null");
@@ -71,7 +71,7 @@ namespace EmployeeManagement.Presentations.Controllers
             {
                 return UnprocessableEntity(ModelState);
             }
-            _servic.CompanyService.UpdateCompany(id, company, trackChanges: true);
+           await _servic.CompanyService.UpdateCompanyAsync(id, company, trackChanges: true);
             return NoContent();
             
         }

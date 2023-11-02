@@ -1,6 +1,7 @@
 ﻿
 using Contracts;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace EmployeeManagement.Repository
@@ -23,20 +24,20 @@ namespace EmployeeManagement.Repository
             Delete(company);
         }
 
-        public IEnumerable<Company> GetAllCompanies(bool trackChanges)
+        public async Task<IEnumerable<Company>> GetAllCompaniesAsync(bool trackChanges)
         {
-                return FindAll(trackChanges).OrderBy(c => c.Name)
-                                             .ToList();
+                return await FindAll(trackChanges).OrderBy(c => c.Name)
+                                             .ToListAsync();
         }
 
-        public IEnumerable<Company> GetByIds(IEnumerable<Guid> ids, bool trackChanges)
+        public async Task<IEnumerable<Company>> GetByIdsAsync(IEnumerable<Guid> ids, bool trackChanges)
         {
-            return FindByCondition(c => ids.Contains(c.Id), trackChanges);
+          return await FindByCondition(c => ids.Contains(c.Id), trackChanges).ToListAsync();
         }
 
-        public Company? GetCompany(Guid companyId, bool trackChanges)
+        public async Task<Company?> GetCompanyAsync(Guid companyId, bool trackChanges)
         {
-            return FindByCondition(c => c.Id == companyId, trackChanges).SingleOrDefault();
+          return await FindByCondition(c => c.Id == companyId, trackChanges).SingleOrDefaultAsync();
         } 
 
 
